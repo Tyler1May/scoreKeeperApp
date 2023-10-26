@@ -15,6 +15,7 @@ class PlayerTableViewCell: UITableViewCell {
     @IBOutlet var playerNameLabel: UILabel!
     @IBOutlet var scoreLabel: UILabel!
     @IBOutlet var intervalField: UITextField!
+    @IBOutlet var cellView: UIView!
     
     var score = 0
     var index = 0
@@ -26,6 +27,12 @@ class PlayerTableViewCell: UITableViewCell {
     
     }
 
+    @IBAction func valueChanged(_ sender: Any) {
+        while (intervalField.text?.count)! > 3 {
+            intervalField.text?.removeLast()
+        }
+    }
+    
     @IBAction func subtractScore(_ sender: Any) {
         if let text = intervalField.text {
             score -= Int(text) ?? 1

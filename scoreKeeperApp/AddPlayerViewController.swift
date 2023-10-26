@@ -39,6 +39,13 @@ class AddPlayerViewController: UIViewController {
             playerNameField.text = player.name
             playerScoreField.text = String(player.score)
         }
+        
+        self.navigationController?.navigationBar.tintColor = .black
+        
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "background1")
+        view.addSubview(backgroundImage)
+        view.sendSubviewToBack(backgroundImage)
 
         // Do any additional setup after loading the view.
     }

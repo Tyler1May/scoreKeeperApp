@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol PlayerDisplayDelegate {
+    func getNewPlayers(_:ScoreboardTableViewController,players: [Player])
+}
+
 class ScoreboardTableViewController: UITableViewController, SaveButtonDelegate, PlayerCellDelegate {
     func saveButtonTapped(withInfo info: Player) {
         if let index = myPlayers.firstIndex(where: { $0.id == info.id }) {
@@ -17,28 +21,33 @@ class ScoreboardTableViewController: UITableViewController, SaveButtonDelegate, 
             myPlayers.insert(info, at: 0)
         }
         
+        myPlayers = order(setting: setting, with: myPlayers)
+        
         tableView.reloadData()
     }
     
+    var setting: GameSetting!
+    var playerDelegate: PlayerDisplayDelegate?
     
-    var myPlayers: [Player] = [] {
-        didSet {
-            Player.save(players: myPlayers)
-        }
-    }
+    var myPlayers: [Player] = [] 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let loaded = Player.load()
-        if !loaded.isEmpty {
-            myPlayers = loaded
-        } else {
-            myPlayers = Player.samplePlayer()
+        if !myPlayers.isEmpty {
+            myPlayers = order(setting: setting, with: myPlayers)
+            tableView.reloadData()
         }
         
+        self.navigationController?.navigationBar.tintColor = .black
+        
+        let backgroundImage = UIImageView(image: UIImage(named: "background"))
+        tableView.backgroundView = backgroundImage
+        backgroundImage.contentMode = .scaleAspectFill
+        backgroundImage.frame = tableView.frame
+        tableView.sendSubviewToBack(backgroundImage)
+        tableView.backgroundColor = .clear
     }
-
+    
     // MARK: - Table view data source
     @IBAction func addTapped(_ sender: Any) {
         performSegue(withIdentifier: "toAdd", sender: nil)
@@ -62,6 +71,7 @@ class ScoreboardTableViewController: UITableViewController, SaveButtonDelegate, 
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerCell", for: indexPath) as! PlayerTableViewCell
         let player = myPlayers[indexPath.row]
         
+        cell.cellView.layer.cornerRadius = 20
         cell.delegate = self
         cell.score = player.score
         cell.index = indexPath.row
@@ -73,6 +83,8 @@ class ScoreboardTableViewController: UITableViewController, SaveButtonDelegate, 
     
     func recieveNewScore(_: PlayerTableViewCell, score: Int, index: Int) {
         myPlayers[index].score = score
+        myPlayers = order(setting: setting, with: myPlayers)
+        tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -86,6 +98,8 @@ class ScoreboardTableViewController: UITableViewController, SaveButtonDelegate, 
         if editingStyle == .delete {
             myPlayers.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            myPlayers = order(setting: setting, with: myPlayers)
+            tableView.reloadData()
         }
     }
     
@@ -100,6 +114,20 @@ class ScoreboardTableViewController: UITableViewController, SaveButtonDelegate, 
         }
         vc?.delegate = self
         return vc
+    }
+    
+    func order(setting: GameSetting, with players: [Player]) -> [Player] {
+        var players = players
+        switch setting {
+        case .highScore:
+            players.sort(by: >)
+        case .none:
+            break
+        case .lowScore:
+            players.sort(by: <)
+        }
+        playerDelegate?.getNewPlayers(self, players: players)
+        return players
     }
     
 }
