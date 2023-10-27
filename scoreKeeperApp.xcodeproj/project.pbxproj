@@ -72,12 +72,8 @@
 			children = (
 				F7A6C4ED2AE03942006E6819 /* AppDelegate.swift */,
 				F7A6C4EF2AE03942006E6819 /* SceneDelegate.swift */,
-				F7BE51962AE6BB23009A04A2 /* ScoreboardTableViewController.swift */,
-				F7BE51982AE6BB4C009A04A2 /* AddPlayerViewController.swift */,
-				F7BE519C2AE6D3AA009A04A2 /* PlayerTableViewCell.swift */,
-				F7F3F1D32AE96E5400828394 /* GameTableViewController.swift */,
-				F7F3F1D52AE96E8400828394 /* AddGameViewController.swift */,
-				F7F3F1D72AE96F7F00828394 /* GameTableViewCell.swift */,
+				F7F3F1DA2AEBFF4000828394 /* Scoreboard views */,
+				F7F3F1D92AEBFF1D00828394 /* Game views */,
 				F7F3F1D12AE96CBC00828394 /* Game.swift */,
 				F7BE519A2AE6BB91009A04A2 /* Player.swift */,
 				F7A6C4F32AE03942006E6819 /* Main.storyboard */,
@@ -86,6 +82,26 @@
 				F7A6C4FB2AE03943006E6819 /* Info.plist */,
 			);
 			path = scoreKeeperApp;
+			sourceTree = "<group>";
+		};
+		F7F3F1D92AEBFF1D00828394 /* Game views */ = {
+			isa = PBXGroup;
+			children = (
+				F7F3F1D32AE96E5400828394 /* GameTableViewController.swift */,
+				F7F3F1D72AE96F7F00828394 /* GameTableViewCell.swift */,
+				F7F3F1D52AE96E8400828394 /* AddGameViewController.swift */,
+			);
+			path = "Game views";
+			sourceTree = "<group>";
+		};
+		F7F3F1DA2AEBFF4000828394 /* Scoreboard views */ = {
+			isa = PBXGroup;
+			children = (
+				F7BE51962AE6BB23009A04A2 /* ScoreboardTableViewController.swift */,
+				F7BE519C2AE6D3AA009A04A2 /* PlayerTableViewCell.swift */,
+				F7BE51982AE6BB4C009A04A2 /* AddPlayerViewController.swift */,
+			);
+			path = "Scoreboard views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

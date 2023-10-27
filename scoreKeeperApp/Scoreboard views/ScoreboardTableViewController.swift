@@ -40,7 +40,7 @@ class ScoreboardTableViewController: UITableViewController, SaveButtonDelegate, 
         
         self.navigationController?.navigationBar.tintColor = .black
         
-        let backgroundImage = UIImageView(image: UIImage(named: "background"))
+        let backgroundImage = UIImageView(image: UIImage(named: "background1"))
         tableView.backgroundView = backgroundImage
         backgroundImage.contentMode = .scaleAspectFill
         backgroundImage.frame = tableView.frame

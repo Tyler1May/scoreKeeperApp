@@ -32,7 +32,7 @@ class GameTableViewController: UITableViewController, AddButtonDelegate, PlayerD
         super.viewDidLoad()
         myGames = Game.load()
         
-        let backgroundImage = UIImageView(image: UIImage(named: "background"))
+        let backgroundImage = UIImageView(image: UIImage(named: "background1"))
         tableView.backgroundView = backgroundImage
         backgroundImage.contentMode = .scaleAspectFill
         backgroundImage.frame = tableView.frame
@@ -88,6 +88,13 @@ class GameTableViewController: UITableViewController, AddButtonDelegate, PlayerD
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             myGames.remove(at: indexPath.row)
+            
+            if let cell = tableView.cellForRow(at: indexPath) {
+                cell.tintColor = .red
+                cell.clipsToBounds = true
+                cell.layer.cornerRadius = 20
+            }
+            
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
